@@ -17,7 +17,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	make -C $(LIBFT_PATH) clean
+	$(RM) $(NAME)
 
 fclean:
 	$(RM) $(NAME)
