@@ -6,6 +6,7 @@ RM = rm -rf
 SRCS =	./src/main.c \
 		./src/itoa.c \
 		./src/parsing.c \
+		./src/error.c \
 
 SRCDIR = src/
 OBJS = $(SRCS:$(SRCDIR)%.c=%.o)

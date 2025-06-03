@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:31:19 by samperez          #+#    #+#             */
-/*   Updated: 2025/05/28 16:49:14 by samperez         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:16:14 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	check_non_numeric(char **argv)
 		tmp2 = ft_itoa(tmp);
 		if (ft_strncmp(argv[i], tmp2, ft_strlen(argv[i])))
 			return (EXIT_FAILURE);
+		free(tmp2);
 		i++;
 	}
 	return (EXIT_SUCCESS);
