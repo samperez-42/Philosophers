@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:31:19 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/06 11:32:59 by samperez         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:37:13 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void	check_before(const char *nptr, int *i, int *neg)
 	}
 }
 
-int	ft_atoi(const char *nptr)
+long	ft_atol(const char *nptr)
 {
-	int	i;
-	int	neg;
-	int	res;
+	int		i;
+	int		neg;
+	long	res;
 
 	i = 0;
 	neg = 0;
@@ -75,7 +75,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 int	check_params(int argc, char **argv)
 {
 	int		i;
-	int		tmp;
+	long	tmp;
 	char	*tmp2;
 
 	i = 1;
@@ -85,16 +85,18 @@ int	check_params(int argc, char **argv)
 		return (printf("Error: Incorrect number of arguments\n"), EXIT_FAILURE);
 	while (argv[i])
 	{
-		tmp = ft_atoi(argv[i]);
+		tmp = ft_atol(argv[i]);
+		if (tmp > INT_MAX || tmp <= INT_MIN)
+			return (printf("Error: Argv outside INT range\n"), EXIT_FAILURE);
 		if (tmp < 0)
 			return (printf("Error: Argv contains negatives\n"), EXIT_FAILURE);
 		tmp2 = ft_itoa(tmp);
-		if (ft_strncmp(argv[i], tmp2, ft_strlen(argv[i])))
+		if (ft_strncmp(argv[i], tmp2, ft_strlen(tmp2)) != 0)
 			return (printf("Error: Argv contains non numeric\n"), EXIT_FAILURE);
 		free(tmp2);
 		i++;
 	}
-	if (ft_atoi(argv[1]) == 0)
-		return (printf("No philosophers to eat\n"), EXIT_FAILURE);
+	if (ft_atol(argv[1]) == 0)
+		return (printf("Error: No philosophers to eat\n"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

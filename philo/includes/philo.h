@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:39 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/06 11:25:34 by samperez         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:35:33 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <limits.h>
 
 typedef struct s_philo
 {
@@ -34,7 +35,7 @@ typedef struct s_philo
 // Argv parsing
 int		check_params(int argc, char **argv);
 char	*ft_itoa(int n);
-int		ft_atoi(const char *nptr);
+long	ft_atol(const char *nptr);
 
 // Error / free
 void	free_all(t_philo *philo);
