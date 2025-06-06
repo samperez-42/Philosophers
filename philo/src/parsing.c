@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:31:19 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/03 11:16:14 by samperez         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:32:59 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int	check_non_numeric(char **argv)
+int	check_params(int argc, char **argv)
 {
 	int		i;
 	int		tmp;
@@ -81,16 +81,20 @@ int	check_non_numeric(char **argv)
 	i = 1;
 	tmp = 0;
 	tmp2 = NULL;
+	if (argc < 5 || argc > 6)
+		return (printf("Error: Incorrect number of arguments\n"), EXIT_FAILURE);
 	while (argv[i])
 	{
 		tmp = ft_atoi(argv[i]);
 		if (tmp < 0)
-			return (EXIT_FAILURE);
+			return (printf("Error: Argv contains negatives\n"), EXIT_FAILURE);
 		tmp2 = ft_itoa(tmp);
 		if (ft_strncmp(argv[i], tmp2, ft_strlen(argv[i])))
-			return (EXIT_FAILURE);
+			return (printf("Error: Argv contains non numeric\n"), EXIT_FAILURE);
 		free(tmp2);
 		i++;
 	}
+	if (ft_atoi(argv[1]) == 0)
+		return (printf("No philosophers to eat\n"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

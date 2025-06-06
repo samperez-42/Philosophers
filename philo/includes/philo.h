@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:39 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/03 11:27:17 by samperez         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:25:34 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ typedef struct s_philo
 }			t_philo;
 
 // Argv parsing
-int		check_non_numeric(char **argv);
+int		check_params(int argc, char **argv);
 char	*ft_itoa(int n);
 int		ft_atoi(const char *nptr);
 
 // Error / free
-void	free_argv(char **argv, int argc);
 void	free_all(t_philo *philo);
 
 #endif
