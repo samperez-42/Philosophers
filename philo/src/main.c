@@ -3,51 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:04 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/06 12:35:01 by samperez         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:37:39 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-// Int variables not allocated, just free the thread / mutex
-int	init_struct(t_philo *philo, char **argv, int argc)
-{
-	philo->n_philo = (int) ft_atol(argv[1]);
-	philo->time_to_die = (int) ft_atol(argv[2]);
-	philo->time_to_eat = (int) ft_atol(argv[3]);
-	philo->time_to_sleep = (int) ft_atol(argv[4]);
-	if (argc == 6)
-		philo->n_must_eat = (int) ft_atol(argv[5]);
-	philo->philosophers = malloc(philo->n_philo * sizeof(pthread_t));
-	if (!philo->philosophers)
-	{
-		free(philo);
-		return (EXIT_FAILURE);
-	}
-	philo->forks = malloc(philo->n_philo * sizeof(pthread_mutex_t));
-	if (!philo->forks)
-	{
-		free(philo->philosophers);
-		free(philo);
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	main(int argc, char **argv)
 {
+	t_rules	*rules;
 	t_philo	*philo;
 
 	if (check_params(argc, argv))
 		return (EXIT_FAILURE);
-	philo = malloc(sizeof(t_philo));
-	if (!philo)
+	rules = malloc(sizeof(t_rules));
+	if (!rules)
 		return (printf("Error: Malloc failed\n"), EXIT_FAILURE);
-	if (init_struct(philo, argv, argc))
+	philo = malloc(sizeof(t_philo) * ft_atol(argv[1]));
+	if (!philo)
+	{
+		free(rules);
+		return (printf("Error: Malloc failed\n"), EXIT_FAILURE);
+	}
+	if (init_rules(rules, philo, argv, argc))
 		return (printf("Failed to init the struct\n"), EXIT_FAILURE);
-	free_all(philo);
+	if (init_philos(rules, philo))
+		return (printf("Failed to init the philosophers\n"), EXIT_FAILURE);
+	free_all(rules, philo);
 	return (EXIT_SUCCESS);
 }

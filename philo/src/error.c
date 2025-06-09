@@ -3,27 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 10:36:34 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/03 12:21:33 by samperez         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:12:02 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-// Int variables not allocated, just free the thread / mutex
-void	free_all(t_philo *philo)
+/* void	free_philo_fork(t_rules *rules, t_philo *philo)
 {
-/* 	int	i;
+	int	i;
 
-	i = philo->n_philo;
-	while (i-- > 0)
+	i = 0;
+	while (i < rules->n_philo)
 	{
-		pthread_detach(philo->philosophers[i]);
-		pthread_mutex_destroy(&philo->forks[i]);
-	} */
-	free(philo->philosophers);
-	free(philo->forks);
+		if (philo[i].thread)
+			pthread_detach(philo[i].thread);
+		pthread_mutex_unlock(&rules->forks[i]);
+		pthread_mutex_destroy(&rules->forks[i]);
+		i++;
+	}
+} */
+
+// Int variables not allocated, just free the thread / mutex
+void	free_all(t_rules *rules, t_philo *philo)
+{
+//	free_philo_fork(rules, philo);
+	free(rules->forks);
 	free(philo);
+	free(rules);
 }
