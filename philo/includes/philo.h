@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:39 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/06 12:35:33 by samperez         ###   ########.fr       */
+/*   Updated: 2025/06/12 10:37:25 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,49 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <limits.h>
+# include <stdint.h>
+
+/*--------------------------------STRUCTS--------------------------------*/
+
+typedef struct s_rules	t_rules;
 
 typedef struct s_philo
 {
-	pthread_t		*philosophers;
+	int					id;
+	int					times_eaten;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+	pthread_t			thrd;
+	t_rules				*rules;
+}			t_philo;
+
+typedef struct s_rules
+{
+	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	int				n_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				n_must_eat;
-}			t_philo;
+}			t_rules;
+
+/*--------------------------------FUNCTIONS--------------------------------*/
 
 // Argv parsing
 int		check_params(int argc, char **argv);
 char	*ft_itoa(int n);
 long	ft_atol(const char *nptr);
 
+// Initializing
+int		init_struct(t_rules *rules, char **argv, int argc); // Frees if it fails
+int		init_threads(t_rules *rules);
+
+//Philosophers routine
+void	*routine(void *arg);
+
 // Error / free
-void	free_all(t_philo *philo);
+void	destroy_mutex(t_rules *rules);
+int		free_all(t_rules *rules);
 
 #endif

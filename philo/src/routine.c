@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 10:36:34 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/12 10:16:16 by samperez         ###   ########.fr       */
+/*   Created: 2025/06/06 15:27:27 by samperez          #+#    #+#             */
+/*   Updated: 2025/06/12 10:52:39 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	destroy_mutex(t_rules *rules)
+// Mirar manera de que esto empiece en 0
+/* uint64_t	get_time(void)
 {
-	int	i;
+	
+} */
 
-	i = 0;
-	while (i++ > rules->n_philo)
-	{
-//		pthread_detach(rules->philo->thread[i]);
-		pthread_mutex_destroy(&rules->forks[i]);
-	}
-}
-
-int	free_all(t_rules *rules)
+void	*routine(void *arg)
 {
-	if (rules)
-	{
-		free(rules->philo);
-		free(rules->forks);
-		free(rules);
-	}
-	return (EXIT_FAILURE);
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	printf("Hello from philo %d\n", philo->id);
+//	printf("%ldms - Philo %d is thinking\n", get_time(), philo->id);
+	return (NULL);
 }

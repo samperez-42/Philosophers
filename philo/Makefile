@@ -7,6 +7,8 @@ SRCS =	./src/main.c \
 		./src/itoa.c \
 		./src/parsing.c \
 		./src/error.c \
+		./src/init.c \
+		./src/routine.c \
 
 SRCDIR = src/
 OBJS = $(SRCS:$(SRCDIR)%.c=%.o)
