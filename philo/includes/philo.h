@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:39 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/12 11:16:07 by samperez         ###   ########.fr       */
+/*   Updated: 2025/08/11 11:55:14 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_rules
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	int				n_philo;
+	size_t			start_time;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
@@ -50,19 +51,22 @@ typedef struct s_rules
 /*--------------------------------FUNCTIONS--------------------------------*/
 
 // Argv parsing
-int		check_params(int argc, char **argv);
-char	*ft_itoa(int n);
-long	ft_atol(const char *nptr);
+int			check_params(int argc, char **argv);
+char		*ft_itoa(int n);
+long		ft_atol(const char *nptr);
 
 // Initializing
-int		init_struct(t_rules *rules, char **argv, int argc); // Frees if it fails
-int		init_threads(t_rules *rules);
+int			init_struct(t_rules *rules, char **argv, int argc); // Frees if it fails
+int			init_threads(t_rules *rules);
+
+// Clock function
+uint64_t	get_time_ms(void);
 
 //Philosophers routine
-void	*routine(void *arg);
+void		*routine(void *arg);
 
 // Error / free
-void	destroy_mutex(t_rules *rules);
-int		free_all(t_rules *rules);
+void		destroy_mutex(t_rules *rules);
+int			free_all(t_rules *rules);
 
 #endif

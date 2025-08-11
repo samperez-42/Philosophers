@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:50:23 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/12 11:16:35 by samperez         ###   ########.fr       */
+/*   Updated: 2025/08/11 11:52:11 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	init_struct(t_rules *rules, char **argv, int argc)
 	rules->time_to_die = (int) ft_atol(argv[2]);
 	rules->time_to_eat = (int) ft_atol(argv[3]);
 	rules->time_to_sleep = (int) ft_atol(argv[4]);
+	rules->start_time = get_time_ms();
 	if (argc == 6)
 		rules->n_must_eat = (int) ft_atol(argv[5]);
 	rules->philo = malloc(rules->n_philo * sizeof(t_philo));
@@ -54,6 +55,7 @@ int	init_threads(t_rules *rules)
 		rules->philo[i].times_eaten = 0;
 		pthread_mutex_init(&rules->forks[i], NULL);
 		rules->philo[i].right_fork = &rules->forks[i];
+		rules->philo[i].left_fork = NULL;
 		pthread_create(&rules->philo[i].thrd, NULL, &routine, &rules->philo[i]);
 		pthread_join(rules->philo[i].thrd, NULL);
 		i++;
