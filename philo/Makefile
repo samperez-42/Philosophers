@@ -9,6 +9,7 @@ SRCS =	./src/main.c \
 		./src/error.c \
 		./src/init.c \
 		./src/routine.c \
+		./src/utils.c \
 
 SRCDIR = src/
 OBJS = $(SRCS:$(SRCDIR)%.c=%.o)
