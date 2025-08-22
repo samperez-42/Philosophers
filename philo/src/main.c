@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:04 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/12 11:16:42 by samperez         ###   ########.fr       */
+/*   Updated: 2025/08/20 10:37:14 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 
 int	main(int argc, char **argv)
 {
-	t_rules	*rules;
+	t_rules	*r;
 
 	if (check_params(argc, argv))
 		return (EXIT_FAILURE);
-	rules = malloc(sizeof(t_rules));
-	if (!rules)
+	r = malloc(sizeof(t_rules));
+	if (!r)
 		return (printf("Error: Malloc failed\n"), EXIT_FAILURE);
-	if (init_struct(rules, argv, argc))
-		return (printf("Failed to init the rules struct\n"), EXIT_FAILURE);
-	if (init_threads(rules))
+	if (init_struct(r, argv, argc))
+		return (printf("Failed to init the r struct\n"), EXIT_FAILURE);
+	if (init_philos(r, 0))
+		return (printf("Failed to init the philosophers\n"), EXIT_FAILURE);
+	if (threads(r))
 		return (printf("Failed to init the threads\n"), EXIT_FAILURE);
-	destroy_mutex(rules);
-	free_all(rules);
+	destroy_mutex(r); //Maybe I don't need to reach here
+	free_all(r); //Maybe I don't need to reach here
 	return (EXIT_SUCCESS);
 }

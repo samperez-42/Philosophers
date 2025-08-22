@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 20:49:46 by samperez          #+#    #+#             */
-/*   Updated: 2025/08/19 20:50:50 by samperez         ###   ########.fr       */
+/*   Updated: 2025/08/20 10:37:14 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ uint64_t	get_time_ms(void)
 
 void	ft_usleep(size_t milliseconds)
 {
-	size_t	start;
+	uint64_t	start;
 
 	start = get_time_ms();
 	while ((get_time_ms() - start) < milliseconds)
-		usleep(500);
+		usleep(100);
 }
 
 void	philo_msg(char *s, t_philo *philo)
 {
 	size_t	time;
 
-	time = get_time_ms() - philo->rules->start_time;
+	time = get_time_ms() - philo->r->start_time;
 	printf("%ldms - Philo %d %s\n", time, philo->id, s);
 }

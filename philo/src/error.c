@@ -3,34 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 10:36:34 by samperez          #+#    #+#             */
-/*   Updated: 2025/06/12 11:16:21 by samperez         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:13:40 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	destroy_mutex(t_rules *rules)
+int	destroy_mutex(t_rules *r)
 {
 	int	i;
 
 	i = 0;
-	while (i++ > rules->n_philo)
+	while (i > r->n_philo)
 	{
-//		pthread_detach(rules->philo->thread[i]);
-		pthread_mutex_destroy(&rules->forks[i]);
+		pthread_mutex_destroy(&r->forks[i]);
+		i++;
 	}
+	return (EXIT_FAILURE);
 }
 
-int	free_all(t_rules *rules)
+int	free_all(t_rules *r)
 {
-	if (rules)
+	if (r)
 	{
-		free(rules->philo);
-		free(rules->forks);
-		free(rules);
+		if (r->philo)
+			free(r->philo);
+		if (r->forks)
+		{
+			destroy_mutex(r);
+			free(r->forks);
+		}
+		free(r);
 	}
 	return (EXIT_FAILURE);
 }
