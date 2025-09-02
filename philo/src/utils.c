@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 20:49:46 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/02 12:22:03 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/02 12:46:25 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	philo_msg(char *s, t_philo *philo)
 
 	pthread_mutex_lock(&philo->r->write_lock);
 	time = get_time_ms() - philo->r->start_time;
-	printf("%ldms - %d %s\n", time, philo->id, s);
+	printf("%ld %d %s\n", time, philo->id, s);
 	pthread_mutex_unlock(&philo->r->write_lock);
 }
