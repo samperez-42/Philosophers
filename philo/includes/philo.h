@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:39 by samperez          #+#    #+#             */
-/*   Updated: 2025/08/22 14:14:11 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/02 12:18:26 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ typedef struct s_philo
 {
 	int					id;
 	int					is_eating;
-	int					times_eaten;
-	int					last_meal;
+	int					meals;
+	size_t				last_meal;
 	pthread_mutex_t		*l_fork;
 	pthread_mutex_t		*r_fork;
+	pthread_mutex_t		meal_lock;
 	pthread_t			thrd;
 	t_rules				*r;
 }			t_philo;
@@ -44,10 +45,13 @@ typedef struct s_rules
 	pthread_mutex_t	*forks;
 	int				n_philo;
 	size_t			start_time;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				n_must_eat;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	int				n_meals;
+	int				death;
+	pthread_mutex_t	death_lock;
+	pthread_mutex_t	write_lock;
 }			t_rules;
 
 /*--------------------------------FUNCTIONS--------------------------------*/

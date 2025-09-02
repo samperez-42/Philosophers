@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 10:36:34 by samperez          #+#    #+#             */
-/*   Updated: 2025/08/22 14:13:40 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/02 12:19:51 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ int	destroy_mutex(t_rules *r)
 	while (i > r->n_philo)
 	{
 		pthread_mutex_destroy(&r->forks[i]);
+		pthread_mutex_destroy(&r->philo[i].meal_lock);
 		i++;
 	}
+	pthread_mutex_destroy(&r->death_lock);
+	pthread_mutex_destroy(&r->write_lock);
 	return (EXIT_FAILURE);
 }
 
