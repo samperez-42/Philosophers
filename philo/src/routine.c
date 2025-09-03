@@ -3,22 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:27:27 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/02 12:45:35 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:34:13 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	*watcher(void *rule)
+int	philo_loop(t_philo *philo)
 {
-	t_rules	*r;
-
-	r = (t_rules *)rule;
-	printf("%ldms - Master says hello\n\n", (get_time_ms() - r->start_time));
-	return (r);
+	pthread_mutex_lock(&philo->r->death_lock);
+	if (philo->r->death == 1)
+	{
+		pthread_mutex_unlock(&philo->r->death_lock);
+		return (0);
+	}
+	pthread_mutex_unlock(&philo->r->death_lock);
+	return (1);
 }
 
 void	eat(t_philo *philo)
@@ -39,9 +42,7 @@ void	eat(t_philo *philo)
 	}
 	pthread_mutex_lock(&philo->meal_lock);
 	philo_msg("is eating", philo);
-	philo->is_eating = 1;
 	ft_usleep(philo->r->time_to_eat);
-	philo->is_eating = 0;
 	philo->last_meal = get_time_ms() - philo->r->start_time;
 	philo->meals++;
 	pthread_mutex_unlock(&philo->meal_lock);
@@ -65,7 +66,6 @@ static void	lonely_rtn(t_philo *philo)
 	philo_msg("has no one to eat with him, how sad", philo);
 	ft_usleep(philo->r->time_to_die);
 	pthread_mutex_unlock(philo->r_fork);
-	philo_msg("has died", philo);
 	return ;
 }
 
@@ -79,8 +79,7 @@ void	*rtn(void *arg)
 		lonely_rtn(philo);
 		return (philo);
 	}
-	while (/* not_dead() == EXIT_SUCCESS ||  */philo->meals != philo->r->n_meals)
+	while (philo_loop(philo) == 1)
 		philos_routine(philo);
-//	philo_msg("says hello\n", philo);
 	return (philo);
 }

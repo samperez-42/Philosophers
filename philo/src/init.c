@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:50:23 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/02 12:18:26 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:56:29 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	init_struct(t_rules *r, char **argv, int argc)
 
 int	threads(t_rules *r)
 {
-/* 	pthread_t	master; */
+	pthread_t	master;
 	int			i;
 
 	i = 0;
@@ -64,14 +64,14 @@ int	threads(t_rules *r)
 			return (free_all(r));
 		i++;
 	}
-/* 	if (pthread_create(&master, NULL, &watcher, r) != 0)
-		return (free_all(r)); */
+	if (pthread_create(&master, NULL, &watcher, r) != 0)
+		return (free_all(r));
 	i = 0;
 	while (i < r->n_philo)
 		if (pthread_join(r->philo[i++].thrd, NULL) != 0)
 			return (destroy_mutex(r));
-/* 	if (pthread_join(master, NULL) != 0)
-		return (destroy_mutex(r)); */
+	if (pthread_join(master, NULL) != 0)
+		return (destroy_mutex(r));
 	return (EXIT_SUCCESS);
 }
 
@@ -89,10 +89,9 @@ int	init_philos(t_rules *r, int i)
 	i = 0;
 	while (i < r->n_philo)
 	{
-		r->philo[i].last_meal = r->start_time;
+		r->philo[i].last_meal = 0;
 		r->philo[i].id = i + 1;
 		r->philo[i].meals = 0;
-		r->philo[i].is_eating = 0;
 		r->philo[i].r_fork = &r->forks[i];
 		if (r->philo[i].id == 1)
 			r->philo[i].l_fork = &r->forks[r->n_philo - 1];

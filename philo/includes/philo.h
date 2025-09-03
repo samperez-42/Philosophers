@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:39 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/02 12:18:26 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:51:25 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_rules	t_rules;
 typedef struct s_philo
 {
 	int					id;
-	int					is_eating;
 	int					meals;
 	size_t				last_meal;
 	pthread_mutex_t		*l_fork;
@@ -77,6 +76,7 @@ void		philo_msg(char *s, t_philo *philo);
 void		*watcher(void *r);
 // Philosophers routine
 void		*rtn(void *arg);
+int			philo_loop(t_philo *philo);
 
 // Error / free
 int			destroy_mutex(t_rules *r);

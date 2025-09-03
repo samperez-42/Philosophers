@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:04 by samperez          #+#    #+#             */
-/*   Updated: 2025/08/20 10:37:14 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:34:37 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 		return (printf("Failed to init the philosophers\n"), EXIT_FAILURE);
 	if (threads(r))
 		return (printf("Failed to init the threads\n"), EXIT_FAILURE);
-	destroy_mutex(r); //Maybe I don't need to reach here
-	free_all(r); //Maybe I don't need to reach here
+	destroy_mutex(r);
+	free_all(r);
 	return (EXIT_SUCCESS);
 }

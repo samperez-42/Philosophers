@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 10:36:34 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/02 15:17:57 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:41:04 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int	free_all(t_rules *r)
 {
 	if (r)
 	{
-		if (r->philo)
-			free(r->philo);
 		if (r->forks)
 		{
 			destroy_mutex(r);
 			free(r->forks);
 		}
+		if (r->philo)
+			free(r->philo);
 		free(r);
 	}
 	return (EXIT_FAILURE);
