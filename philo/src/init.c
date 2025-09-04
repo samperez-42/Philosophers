@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samperez <samperez@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:50:23 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/03 17:56:29 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/04 13:12:54 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	init_philos(t_rules *r, int i)
 		r->philo[i].last_meal = 0;
 		r->philo[i].id = i + 1;
 		r->philo[i].meals = 0;
+		r->philo[i].finished = 0;
 		r->philo[i].r_fork = &r->forks[i];
 		if (r->philo[i].id == 1)
 			r->philo[i].l_fork = &r->forks[r->n_philo - 1];
