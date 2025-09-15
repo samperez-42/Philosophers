@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:50:23 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/04 13:12:54 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/15 13:16:17 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	init_struct(t_rules *r, char **argv, int argc)
 	r->time_to_die = (int) ft_atol(argv[2]);
 	r->time_to_eat = (int) ft_atol(argv[3]);
 	r->time_to_sleep = (int) ft_atol(argv[4]);
+	r->time_to_think = (r->time_to_die - (r->time_to_eat + r->time_to_sleep))
+		/ 4;
 	r->death = 0;
 	if (argc == 6)
 		r->n_meals = (int) ft_atol(argv[5]);

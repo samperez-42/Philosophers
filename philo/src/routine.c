@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:27:27 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/04 13:10:59 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/15 13:45:47 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,28 @@ void	eat(t_philo *philo)
 		pthread_mutex_lock(philo->r_fork);
 		philo_msg("has taken a fork", philo);
 	}
-	philo_msg("is eating", philo);
+	if (philo_loop(philo) == 1)
+		philo_msg("is eating", philo);
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = get_time_ms() - philo->r->start_time;
 	philo->meals++;
-	ft_usleep(philo->r->time_to_eat);
 	pthread_mutex_unlock(&philo->meal_lock);
+	ft_usleep(philo->r->time_to_eat);
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
 }
 
-static void	lonely_rtn(t_philo *philo)
+int	is_satisfied(t_philo *philo)
 {
-	pthread_mutex_lock(philo->r_fork);
-	philo_msg("has taken a fork", philo);
-	philo_msg("has no one to eat with him, how sad", philo);
-	ft_usleep(philo->r->time_to_die);
-	pthread_mutex_unlock(philo->r_fork);
-	return ;
+	pthread_mutex_lock(&philo->meal_lock);
+	if (philo->meals == philo->r->n_meals)
+	{
+		philo->finished = 1;
+		pthread_mutex_unlock(&philo->meal_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->meal_lock);
+	return (0);
 }
 
 void	*rtn(void *arg)
@@ -73,16 +77,18 @@ void	*rtn(void *arg)
 	while (philo_loop(philo) == 1)
 	{
 		eat(philo);
-		pthread_mutex_lock(&philo->meal_lock);
-		if (philo->meals == philo->r->n_meals)
-		{
-			pthread_mutex_unlock(&philo->meal_lock);
+		if (is_satisfied(philo))
 			break ;
+		if (philo_loop(philo) == 1)
+		{
+			philo_msg("is sleeping", philo);
+			ft_usleep(philo->r->time_to_sleep);
 		}
-		pthread_mutex_unlock(&philo->meal_lock);
-		philo_msg("is sleeping", philo);
-		ft_usleep(philo->r->time_to_sleep);
-		philo_msg("is thinking", philo);
+		if (philo_loop(philo) == 1)
+		{
+			philo_msg("is thinking", philo);
+			ft_usleep(philo->r->time_to_think);
+		}
 	}
 	return (philo);
 }

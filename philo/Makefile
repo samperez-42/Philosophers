@@ -1,6 +1,6 @@
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=thread use only for error checking, messes up the timings
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread #-g  use only for error checking, messes up the timings
 RM = rm -rf
 
 SRCS =	./src/main.c \

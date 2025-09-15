@@ -6,7 +6,7 @@
 /*   By: samperez <samperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:37:39 by samperez          #+#    #+#             */
-/*   Updated: 2025/09/04 12:28:57 by samperez         ###   ########.fr       */
+/*   Updated: 2025/09/15 13:14:39 by samperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_rules
 	size_t			start_time;
 	size_t			time_to_die;
 	size_t			time_to_eat;
+	size_t			time_to_think;
 	size_t			time_to_sleep;
 	int				n_meals;
 	int				death;
@@ -77,6 +78,7 @@ void		philo_msg(char *s, t_philo *philo);
 void		*watcher(void *r);
 // Philosophers routine
 void		*rtn(void *arg);
+void		lonely_rtn(t_philo *philo);
 int			philo_loop(t_philo *philo);
 
 // Error / free
